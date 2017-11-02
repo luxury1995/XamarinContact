@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Name="RootPage"
+    x:Class="ContactApp.Views.NewPeoplePage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Command="{Binding SaveCommand}" />
+    </ContentPage.ToolbarItems>
+    <TableView Intent="Settings" BackgroundColor="White">
+        <TableView.Root>
+            <TableSection Title="Infomation">
+                <ViewCell Height="300"> 
+                    <Grid Padding="15,5,10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                     <Image x:Name="ImageButton" Grid.Column="0" Grid.Row="1">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding BindingContext.TapCommand, Source={x:Reference RootPage}}"
+                                CommandParameter="Binding" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Source="{Binding BindingContext.ImageContact,Source={x:Reference RootPage}}"/>
+                </Grid>
+                </ViewCell>
+                <EntryCell Label="FirstName" Keyboard="Text" Text="{Binding Contact.FirstName}"/>
+                <EntryCell Label="LastName" Keyboard="Text" Text="{Binding Contact.LastName}"/>
+            </TableSection>
+            
+            <TableSection Title="Employment" >
+                <EntryCell Label="Company" Keyboard="Text" Text="{Binding Contact.Company}" />
+                <EntryCell Label="Title" Keyboard="Text" Text="{Binding Contact.JobTitle}"/>
+            </TableSection>
+            
+            <TableSection Title="Contact">
+                <EntryCell Label="Phone" Keyboard="Telephone" Text="{Binding Contact.Phone}"/>
+                <EntryCell Label="Email" Keyboard="Email" Text="{Binding Contact.Email}"/>
+            </TableSection>
+           
+            <TableSection Title="Address">
+                <EntryCell Label="Street" Keyboard="Text" Text="{Binding Contact.Street}"/>
+                <EntryCell Label="City" Keyboard="Text" Text="{Binding Contact.City}"/>
+                <EntryCell Label="State" Keyboard="Text" Text="{Binding Contact.State}"/>
+                <EntryCell Label="ZIP" Keyboard="Numeric" Text="{Binding Contact.PostalCode}"/>
+            </TableSection>
+            
+        </TableView.Root>
+    </TableView>
+</ContentPage>

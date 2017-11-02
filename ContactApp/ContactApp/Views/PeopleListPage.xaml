@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    Title="Contact" 
+    x:Class="ContactApp.Views.PeopleListPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddNewCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Hello}"/>
+            <ListView 
+                x:Name="SourceContacts"
+                ItemsSource="{Binding ContactGroups}"
+                IsGroupingEnabled="true"
+                GroupShortNameBinding = "{Binding Key}"  
+                GroupDisplayBinding = "{Binding Key}"
+                HasUnevenRows="True"  
+                SeparatorVisibility="Default"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell 
+                        ImageSource="{Binding PhotoUrl}" 
+                        Text="{Binding Fullname}" 
+                        Detail="{Binding Company}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.GroupHeaderTemplate>  
+                <DataTemplate>  
+                    <ViewCell Height="23">  
+                        <StackLayout BackgroundColor="Purple">  
+                            <Label Text="{Binding Key}"  
+                                   TextColor="White"  
+                                   FontSize="Small"  
+                                   VerticalOptions="CenterAndExpand"  
+                                   Margin="10,0,0,0"/>  
+                        </StackLayout>  
+                    </ViewCell>  
+                </DataTemplate>  
+            </ListView.GroupHeaderTemplate>  
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

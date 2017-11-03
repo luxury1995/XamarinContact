@@ -1,10 +1,6 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using ContactApp.Services;
 using ContactApp.Droid;
@@ -20,6 +16,7 @@ namespace ContactApp.Droid
     [Activity(Label = "ContactApp.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, ContactService
     {
+        ContentResolver _resolver = Application.Context.ContentResolver;
         private ObservableCollection<Contact> Contacts { get; set; }
 
         public Task<ObservableCollection<Contact>> GetContacts()
@@ -29,13 +26,12 @@ namespace ContactApp.Droid
             string[] projection = {
                 ContactsContract.Contacts.InterfaceConsts.Id,
                 ContactsContract.Contacts.InterfaceConsts.DisplayName,
-                ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri
+                ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri,
+                ContactsContract.Contacts.InterfaceConsts.NameRawContactId
               };
-            var cursor = Application.Context.ContentResolver.Query(uri, projection, null, null, null);
+            //Query(uri,projection,selection,selectionarg,sortorder
+            var cursor = _resolver.Query(uri, projection, null, null, null);
 
-
-            string id = cursor.GetString(
-                cursor.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.NameRawContactId));
             var contactList = new List<Contact>();
 
             if (cursor.MoveToFirst())
@@ -43,13 +39,28 @@ namespace ContactApp.Droid
                 do
                 {
                     Contact contact = new Contact();
+                    contact.Id = cursor.GetString(cursor.GetColumnIndex(projection[3]));
                     contact.FirstName = cursor.GetString(cursor.GetColumnIndex(projection[1]));
                     contact.PhotoUrl = cursor.GetString(cursor.GetColumnIndex(projection[2]));
-                    var cursorOrg = Application.Context.ContentResolver.Query(uri, null,
-                                            ContactsContract.Data.InterfaceConsts.NameRawContactId + " = ?",
-                                            new string[] { id }, null);
+                    var cursorChild = _resolver.Query(  ContactsContract.Data.ContentUri, null,ContactsContract.Contacts.InterfaceConsts.NameRawContactId+ " = ?",new string[] { contact.Id }, null);
+                    if(cursorChild !=null && cursorChild.MoveToFirst()){
+                        do
+                        {
+                            //return many type of data 
+                            var dataType = cursorChild.GetString(cursorChild.GetColumnIndex(ContactsContract.DataColumns.Mimetype));
+                            switch(dataType){
+                                case ContactsContract.CommonDataKinds.Organization.ContentItemType:
+                                    var company = cursorChild.GetString(cursorChild.GetColumnIndex(ContactsContract.CommonDataKinds.Organization.Company));
+                                    contact.Company = company;
+                                    break;
+                            }
+                        } while (cursorChild.MoveToNext());
+                    }
+
+
                     contactList.Add(contact);
                 } while (cursor.MoveToNext());
+                cursor.Close();
             }
             Contacts = new ObservableCollection<Contact>(contactList);
             return Task.FromResult(Contacts);

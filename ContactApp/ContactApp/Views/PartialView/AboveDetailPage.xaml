@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ContactApp.Views.PartialView.AboveDetailPage"
+    Padding="10,20,10,10">
+	<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image
+            BackgroundColor="Gray"
+            Grid.Column="0"
+            Grid.RowSpan="4"
+        />
+        <Label Text="1" Grid.Column="1" Grid.Row="0"/>
+        <Label Text="1" Grid.Column="1" Grid.Row="1"/>
+        <Label Text="1" Grid.Column="1" Grid.Row="2"/>
+        <Label Text="1" Grid.Column="1" Grid.Row="3"/>
+    </Grid>
+</ContentView>

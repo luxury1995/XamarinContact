@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cv="clr-namespace:ContactApp.Views.PartialView;assembly=ContactApp"
+    x:Class="ContactApp.Views.DetailContactPage"
+    Title="Detail">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+    <cv:AboveDetailPage Grid.Row="0" Grid.ColumnSpan="2"></cv:AboveDetailPage>
+        <cv:BelowDetailPage Grid.Row="1" Grid.Column="0"></cv:BelowDetailPage>
+    </Grid>
+</ContentPage>

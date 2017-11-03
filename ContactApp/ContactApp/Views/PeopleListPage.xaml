@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     Title="Contact" 
+    x:Name="RootPage"
     x:Class="ContactApp.Views.PeopleListPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddNewCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Hello}"/>
+            
             <ListView 
                 x:Name="SourceContacts"
                 ItemsSource="{Binding ContactGroups}"
@@ -20,21 +21,32 @@
                 >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell 
-                        ImageSource="{Binding PhotoUrl}" 
-                        Text="{Binding Fullname}" 
-                        Detail="{Binding Company}" />
+                            <ViewCell>
+                                <StackLayout  Orientation="Vertical">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding BindingContext.DetailCommand, Source={x:Reference RootPage}}"
+                                        CommandParameter="Binding">
+                                    </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                                <Label Text="{Binding Fullname}" Margin="10,10,10,0" Font="Bold,20"/>
+                                <Label Text="{Binding Company}" Margin="10,10,10,10" />
+                        </StackLayout>
+                            </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                
                 <ListView.GroupHeaderTemplate>  
                 <DataTemplate>  
                     <ViewCell Height="23">  
-                        <StackLayout BackgroundColor="Purple">  
+                        <StackLayout BackgroundColor="Gray">  
                             <Label Text="{Binding Key}"  
-                                   TextColor="White"  
-                                   FontSize="Small"  
+                                   Font="Bold"
+                                   TextColor="Aqua"   
+                                   FontSize="Medium"
+                                   HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"  
-                                   Margin="10,0,0,0"/>  
+                                />  
                         </StackLayout>  
                     </ViewCell>  
                 </DataTemplate>  

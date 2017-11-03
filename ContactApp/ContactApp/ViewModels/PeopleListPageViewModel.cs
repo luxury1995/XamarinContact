@@ -18,7 +18,6 @@ namespace ContactApp.ViewModels
     public class PeopleListPageViewModel : ViewModelBase ,IViewModel
     {
         private int Flag;
-        private string _hello;
       
         private IDataService _dataServices;
         private ObservableCollection<Contact> _contacts;
@@ -36,29 +35,28 @@ namespace ContactApp.ViewModels
             set => SetProperty(ref _groupContact, value);
         }
 
-        public string Hello
-        {
-            get => _hello;
-            set => SetProperty(ref _hello, value);
-        }
-
-
-
         public ICommand AddNewCommand { get; set; }
+
+        public ICommand DetailCommand { get; set; }
 
 
         public PeopleListPageViewModel(INavigationService navigationService, IDataService iDataService) : base(navigationService)
         {
             _dataServices = iDataService;
             AddNewCommand = new DelegateCommand(AddNew);
+            DetailCommand = new DelegateCommand(DetailExecute);
            
         
         }
+
         private void AddNew()
         {
             _navigationService.NavigateAsync("NewPeople");
         }
 
+        private void DetailExecute(){
+            _navigationService.NavigateAsync("Detail");
+        }
 
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
@@ -71,7 +69,6 @@ namespace ContactApp.ViewModels
             if (Flag != 1)
             {
                 Contacts = await DependencyService.Get<ContactService>().GetContacts();
-               // Contacts = await _dataServices.GetListContacts();
                 var sorted = from contact in Contacts
                              orderby contact.Fullname
                              group contact by contact.NameSort into ContactGroup

@@ -36,6 +36,18 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Drawable\icon-image-128.png" />
+    <EmbeddedResource Include="Views\PartialView\AboveDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DetailContactPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PartialView\BelowDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -59,6 +71,15 @@
     <Compile Include="ApplicationObject\AppSetup.cs" />
     <Compile Include="ApplicationObject\AppContainer.cs" />
     <Compile Include="Services\ContactService.cs" />
+    <Compile Include="Views\PartialView\AboveDetailPage.xaml.cs">
+      <DependentUpon>AboveDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DetailContactPage.xaml.cs">
+      <DependentUpon>DetailContactPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PartialView\BelowDetailPage.xaml.cs">
+      <DependentUpon>BelowDetailPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -100,6 +121,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Drawable\message_ic.png" />
+    <None Include="Drawable\call_ic.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -109,6 +132,7 @@
     <Folder Include="Drawable\" />
     <Folder Include="ViewModels\Extension\" />
     <Folder Include="ApplicationObject\" />
+    <Folder Include="Views\PartialView\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.4.0.280\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.4.0.280\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />

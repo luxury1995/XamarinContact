@@ -26,7 +26,7 @@ namespace ContactApp
             Container.RegisterTypeForNavigation<NavigationPage>("Navigation");
             Container.RegisterTypeForNavigation<PeopleListPage>("PeopleList");
             Container.RegisterTypeForNavigation<NewPeoplePage>("NewPeople");
-            Container.RegisterTypeForNavigation<DetailContactPage>("Detail");
+            Container.RegisterTypeForNavigation<DetailContactPage>("DetailContact");
             //Dependency Service
             // register the dependencies in the same
             var contactService = DependencyService.Get<ContactService>();

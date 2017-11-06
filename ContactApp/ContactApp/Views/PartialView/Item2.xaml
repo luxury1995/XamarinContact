@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ContactApp.Views.PartialView.Item2" 
+    Padding="20,0,10,0" Orientation="Horizontal" 
+    Spacing="10" VerticalOptions="CenterAndExpand">
+    <Label Text="Work" />
+    <Label Text="{Binding .}"/>
+    <Image x:Name="ButtonMessage" HeightRequest="30" WidthRequest="30">
+        <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding MessageCommand}" CommandParameter="Binding" />
+        </Image.GestureRecognizers>
+    </Image>
+</StackLayout>

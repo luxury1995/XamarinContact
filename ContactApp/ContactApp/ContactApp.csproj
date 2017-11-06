@@ -36,7 +36,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Drawable\icon-image-128.png" />
-    <EmbeddedResource Include="Views\PartialView\AboveDetailPage.xaml">
+    <EmbeddedResource Include="Views\PartialView\Item2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -44,10 +44,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PartialView\BelowDetailPage.xaml">
+    <EmbeddedResource Include="Views\PartialView\Item1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Drawable\message.png" />
+    <EmbeddedResource Include="Drawable\call_ic.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -60,7 +62,6 @@
     <Compile Include="Views\PeopleListPage.xaml.cs">
       <DependentUpon>..\..\..\AppContact\AppContact\Views\PeopleListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\NewPeoplePageViewModel.cs" />
     <Compile Include="ViewModels\PeopleListPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -71,15 +72,16 @@
     <Compile Include="ApplicationObject\AppSetup.cs" />
     <Compile Include="ApplicationObject\AppContainer.cs" />
     <Compile Include="Services\ContactService.cs" />
-    <Compile Include="Views\PartialView\AboveDetailPage.xaml.cs">
-      <DependentUpon>AboveDetailPage.xaml</DependentUpon>
+    <Compile Include="Views\PartialView\Item2.xaml.cs">
+      <DependentUpon>Item2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DetailContactPage.xaml.cs">
       <DependentUpon>DetailContactPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PartialView\BelowDetailPage.xaml.cs">
-      <DependentUpon>BelowDetailPage.xaml</DependentUpon>
+    <Compile Include="Views\PartialView\Item1.xaml.cs">
+      <DependentUpon>Item1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\DetailContactPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -121,8 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Drawable\message_ic.png" />
-    <None Include="Drawable\call_ic.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

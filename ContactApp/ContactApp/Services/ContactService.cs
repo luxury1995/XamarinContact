@@ -8,6 +8,6 @@ namespace ContactApp.Services
     public interface ContactService
     {
         Task<ObservableCollection<Contact>> GetContacts();
-        string HelloAndroid();
+        Contact GetContact(string id);
     }
 }

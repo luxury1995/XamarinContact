@@ -3,18 +3,60 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cv="clr-namespace:ContactApp.Views.PartialView;assembly=ContactApp"
     x:Class="ContactApp.Views.DetailContactPage"
-    Title="Detail">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-    <cv:AboveDetailPage Grid.Row="0" Grid.ColumnSpan="2"></cv:AboveDetailPage>
-        <cv:BelowDetailPage Grid.Row="1" Grid.Column="0"></cv:BelowDetailPage>
-    </Grid>
+    Title="Detail"
+    x:Name="Root">
+   <StackLayout Orientation="Vertical" Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Image BackgroundColor="Gray" Grid.Column="0" Grid.RowSpan="4" Source="{Binding Contact.PhotoUrl}"/>
+            
+            <Label Text="Name:" Grid.Column="1" Grid.Row="0" Font="20"/>
+            <Entry Text="{Binding Contact.Fullname}"  Grid.Column="1" Grid.Row="1"/>
+     
+            <Label Text="Company:" Grid.Row="2" Grid.Column="1" Font="20"/>
+            <Entry Text="{Binding Contact.Company}" Grid.Column="1" Grid.Row="3"/>
+           
+        </Grid>
+        <Grid RowSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{Binding HeightRequestListView}"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{Binding HeightEmailListRequest}"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Font="20" Text="Phone:" />
+            <ListView Grid.Row="1" ItemsSource="{Binding ListPhones}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                           <cv:Item1/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Grid.Row="2" Font="20" Text="Email:" />
+            
+            <ListView Grid.Row="3" ItemsSource="{Binding ListEmails}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                           <cv:Item2/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </StackLayout>
 </ContentPage>

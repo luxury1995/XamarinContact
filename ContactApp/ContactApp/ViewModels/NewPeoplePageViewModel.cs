@@ -47,7 +47,7 @@ namespace ContactApp.ViewModels
                 return;
             //return path of image and add to contact 
             ImageContact = file.Path;
-            Contact.PhotoUrl = ImageContact;
+            //Contact.PhotoUrl = ImageContact;
         }
         private void SaveData()
         {

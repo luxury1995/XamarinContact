@@ -26,12 +26,12 @@
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer 
                                         Command="{Binding BindingContext.DetailCommand, Source={x:Reference RootPage}}"
-                                        CommandParameter="Binding">
+                                        CommandParameter="{Binding}">
                                     </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
-                                <Label Text="{Binding Fullname}" Margin="10,10,10,0" Font="Bold,20"/>
-                                <Label Text="{Binding Company}" Margin="10,10,10,10" />
-                        </StackLayout>
+                                </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Fullname}" Margin="10,10,10,0" Font="Bold,20"/>
+                                    <Label Text="{Binding Company}" Margin="10,10,10,10" />
+                                </StackLayout>
                             </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -42,7 +42,7 @@
                         <StackLayout BackgroundColor="Gray">  
                             <Label Text="{Binding Key}"  
                                    Font="Bold"
-                                   TextColor="Aqua"   
+                                   TextColor="Blue"   
                                    FontSize="Medium"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"  

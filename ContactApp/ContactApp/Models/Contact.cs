@@ -1,11 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Prism.Mvvm;
 
 namespace ContactApp.Models
 {
     public class Contact : BindableBase
     {
-        
+        private ObservableCollection<String> phones;
+        private ObservableCollection<String> emails;
+
+        private string _id;
         private string _firstname;
         private string _lastname;
         private string _company;
@@ -16,8 +20,13 @@ namespace ContactApp.Models
         private string _city;
         private string _postalcode;
         private string _state;
-        private string _photourl;
-        public string Id { get; set; }
+        private byte[] _photourl;
+
+        public string Id {
+            get => _id;
+            set => SetProperty(ref _id, value);
+            
+        }
 
         public string FirstName
         {
@@ -70,7 +79,7 @@ namespace ContactApp.Models
             get => _state;
             set => SetProperty(ref _state, value);
         }
-        public string PhotoUrl { 
+        public byte[] PhotoUrl { 
             get => _photourl; 
             set => SetProperty(ref _photourl, value); }
 
@@ -84,6 +93,19 @@ namespace ContactApp.Models
 
                 return Fullname[0].ToString().ToUpper();
             }
+        }
+
+
+        public ObservableCollection<String> Phones
+        {
+            get => phones;
+            set => SetProperty(ref phones, value);
+        }
+
+        public ObservableCollection<String> Emails
+        {
+            get => emails;
+            set => SetProperty(ref emails, value);
         }
     }
 }

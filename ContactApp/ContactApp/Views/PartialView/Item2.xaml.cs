@@ -4,11 +4,12 @@ using Xamarin.Forms;
 
 namespace ContactApp.Views.PartialView
 {
-    public partial class BelowDetailPage : ContentView
+    public partial class Item2 : StackLayout
     {
-        public BelowDetailPage()
+        public Item2()
         {
             InitializeComponent();
+            ButtonMessage.Source = ImageSource.FromResource("ContactApp.Drawable.message.png");
         }
     }
 }

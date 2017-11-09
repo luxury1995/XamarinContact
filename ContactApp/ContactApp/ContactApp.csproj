@@ -82,6 +82,11 @@
       <DependentUpon>Item1.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DetailContactPageViewModel.cs" />
+    <Compile Include="EventArg\PhoneCellArgs.cs" />
+    <Compile Include="Enum\EnumEvent.cs" />
+    <Compile Include="Services\IDialer.cs" />
+    <Compile Include="EventArg\AddressCellArgs.cs" />
+    <Compile Include="Models\PhoneModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -120,6 +125,18 @@
     <Reference Include="Prism.Autofac.Forms">
       <HintPath>..\packages\Prism.Autofac.Forms.6.3.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Prism.Autofac.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="Corcav.Behaviors">
+      <HintPath>..\packages\Corcav.Behaviors.2.3.7\lib\Corcav.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Messaging.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Messaging.5.0.0\lib\netstandard1.0\Plugin.Messaging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Messaging">
+      <HintPath>..\packages\Xam.Plugins.Messaging.5.0.0\lib\netstandard1.0\Plugin.Messaging.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -133,6 +150,8 @@
     <Folder Include="ViewModels\Extension\" />
     <Folder Include="ApplicationObject\" />
     <Folder Include="Views\PartialView\" />
+    <Folder Include="EventArg\" />
+    <Folder Include="Enum\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.4.0.280\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.4.0.280\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />

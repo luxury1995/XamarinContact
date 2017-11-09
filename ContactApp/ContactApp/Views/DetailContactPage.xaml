@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:cv="clr-namespace:ContactApp.Views.PartialView;assembly=ContactApp"
-    x:Class="ContactApp.Views.DetailContactPage"
-    Title="Detail"
-    x:Name="Root">
-   <StackLayout Orientation="Vertical" Padding="10">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:cv="clr-namespace:ContactApp.Views.PartialView;assembly=ContactApp" 
+    x:Class="ContactApp.Views.DetailContactPage" Title="Detail" 
+    xmlns:behaviors="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+    x:Name="RootDetailPage">
+    <StackLayout Orientation="Vertical" Padding="10">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Image BackgroundColor="Gray" Grid.Column="0" Grid.RowSpan="4" Source="{Binding Contact.PhotoUrl}"/>
-            
+            <Image BackgroundColor="Gray" Grid.Column="0" Grid.RowSpan="4" Source="{Binding Contact.PhotoUrl}" />
             <Label Text="Name:" Grid.Column="1" Grid.Row="0" Font="20"/>
-            <Entry Text="{Binding Contact.Fullname}"  Grid.Column="1" Grid.Row="1"/>
-     
+            <Entry Text="{Binding Contact.Fullname}" Grid.Column="1" Grid.Row="1"/>
             <Label Text="Company:" Grid.Row="2" Grid.Column="1" Font="20"/>
             <Entry Text="{Binding Contact.Company}" Grid.Column="1" Grid.Row="3"/>
-           
         </Grid>
         <Grid RowSpacing="10">
             <Grid.ColumnDefinitions>
@@ -32,27 +29,38 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="{Binding HeightRequestListView}"/>
+                <RowDefinition Height="{Binding HeightRequestListView}" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="{Binding HeightEmailListRequest}"/>
+                <RowDefinition Height="{Binding HeightEmailListRequest}" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Font="20" Text="Phone:" />
             <ListView Grid.Row="1" ItemsSource="{Binding ListPhones}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                           <cv:Item1/>
+                            <cv:Item1>
+                                <behaviors:Interaction.Behaviors>
+                                <behaviors:BehaviorCollection>
+                                    <behaviors:EventToCommand EventName="OnItem1Tap" Command="{Binding Path=BindingContext.CallCommand, Source={x:Reference RootDetailPage}}" PassEventArgument="true"/>
+                                </behaviors:BehaviorCollection>
+                            </behaviors:Interaction.Behaviors>
+                            </cv:Item1>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <Label Grid.Row="2" Font="20" Text="Email:" />
-            
             <ListView Grid.Row="3" ItemsSource="{Binding ListEmails}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                           <cv:Item2/>
+                            <cv:Item2>
+                                   <behaviors:Interaction.Behaviors>
+                                <behaviors:BehaviorCollection>
+                                    <behaviors:EventToCommand EventName="OnItem2Tap" Command="{Binding Path=BindingContext.EmailCommand, Source={x:Reference RootDetailPage}}" PassEventArgument="true"/>
+                                </behaviors:BehaviorCollection>
+                            </behaviors:Interaction.Behaviors>
+                            </cv:Item2>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

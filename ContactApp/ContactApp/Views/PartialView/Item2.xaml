@@ -5,10 +5,10 @@
     Padding="20,0,10,0" Orientation="Horizontal" 
     Spacing="10" VerticalOptions="CenterAndExpand">
     <Label Text="Work" />
-    <Label Text="{Binding .}"/>
-    <Image x:Name="ButtonMessage" HeightRequest="30" WidthRequest="30">
+    <Label Text="{Binding .}" x:Name="EmailAdress"/>
+    <Image x:Name="ButtonSendEmail" HeightRequest="30" WidthRequest="30">
         <Image.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding MessageCommand}" CommandParameter="Binding" />
+            <TapGestureRecognizer Command="{Binding EmailCommand}" CommandParameter="Binding" />
         </Image.GestureRecognizers>
     </Image>
 </StackLayout>

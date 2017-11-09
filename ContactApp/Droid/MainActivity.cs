@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Android.Provider;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 [assembly: Xamarin.Forms.Dependency(typeof(MainActivity))]
 namespace ContactApp.Droid
@@ -18,6 +20,12 @@ namespace ContactApp.Droid
     {
         ContentResolver _resolver = Application.Context.ContentResolver;
         private ObservableCollection<Contact> Contacts { get; set; }
+
+        public Contact GetContact(string id)
+        {
+            var contact = Contacts.FirstOrDefault(x => x.Id == id);
+            return contact;
+        }
 
         public Task<ObservableCollection<Contact>> GetContacts()
         {
@@ -41,19 +49,56 @@ namespace ContactApp.Droid
                     Contact contact = new Contact();
                     contact.Id = cursor.GetString(cursor.GetColumnIndex(projection[3]));
                     contact.FirstName = cursor.GetString(cursor.GetColumnIndex(projection[1]));
-                    contact.PhotoUrl = cursor.GetString(cursor.GetColumnIndex(projection[2]));
-                    var cursorChild = _resolver.Query(  ContactsContract.Data.ContentUri, null,ContactsContract.Contacts.InterfaceConsts.NameRawContactId+ " = ?",new string[] { contact.Id }, null);
-                    if(cursorChild !=null && cursorChild.MoveToFirst()){
+                    //contact.PhotoUrl = cursor.GetString(cursor.GetColumnIndex(projection[2]));
+                    var cursorChild = _resolver.Query(ContactsContract.Data.ContentUri, null, ContactsContract.Contacts.InterfaceConsts.NameRawContactId + " = ?", new string[] { contact.Id }, null);
+                    if (cursorChild != null && cursorChild.MoveToFirst())
+                    {
                         do
                         {
                             //return many type of data 
                             var dataType = cursorChild.GetString(cursorChild.GetColumnIndex(ContactsContract.DataColumns.Mimetype));
-                            switch(dataType){
+                            switch (dataType)
+                            {
                                 case ContactsContract.CommonDataKinds.Organization.ContentItemType:
                                     var company = cursorChild.GetString(cursorChild.GetColumnIndex(ContactsContract.CommonDataKinds.Organization.Company));
                                     contact.Company = company;
                                     break;
+                                #region Phones
+                                case ContactsContract.CommonDataKinds.Phone.ContentItemType:
+                                    var Phones = new List<String>();
+                                    var phoneType = cursorChild.GetInt(cursorChild.GetColumnIndex(ContactsContract.CommonDataKinds.CommonColumns.Type));
+                                    var phoneNum = cursorChild.GetString(cursorChild.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.Number));
+                                    switch (phoneType)
+                                    {
+                                        case (int)PhoneDataKind.Home:
+                                            Phones.Add(phoneNum);
+                                            break;
+                                        case (int)PhoneDataKind.Mobile:
+                                            Phones.Add(phoneNum);
+                                            break;
+                                        case (int)PhoneDataKind.Work:
+                                            Phones.Add(phoneNum);
+                                            break;
+                                    }
+
+                                    var listPhones = new ObservableCollection<string>(Phones);
+                                    contact.Phones = listPhones;
+                                    break;
+                                #endregion
+                                #region Email
+                                case ContactsContract.CommonDataKinds.Email.ContentItemType:
+                                    var Emails = new List<String>();
+                                    var email = cursorChild.GetString(cursorChild.GetColumnIndex(ContactsContract.CommonDataKinds.Email.Address));
+                                    Emails.Add(email);
+                                    var listEmail = new ObservableCollection<string>(Emails);
+                                    contact.Emails = listEmail;
+                                    break;
+                                #endregion
+                                default:
+                                    break;
+
                             }
+
                         } while (cursorChild.MoveToNext());
                     }
 
@@ -64,11 +109,6 @@ namespace ContactApp.Droid
             }
             Contacts = new ObservableCollection<Contact>(contactList);
             return Task.FromResult(Contacts);
-        }
-
-        public string HelloAndroid()
-        {
-            return "Hello Android";
         }
 
         protected override void OnCreate(Bundle bundle)

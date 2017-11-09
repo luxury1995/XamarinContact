@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using AppContact.ViewModels;
+using ContactApp.EventArg;
 using ContactApp.Models;
 using ContactApp.Services;
+using Plugin.Messaging;
 using Prism.Navigation;
+using Xamarin.Forms;
 
 namespace ContactApp.ViewModels
 {
@@ -13,8 +16,10 @@ namespace ContactApp.ViewModels
         private ContactService _dataService;
         private Contact _contact;
         private ObservableCollection<Contact> _listContacts;
-        private ObservableCollection<String> _listPhones;
+        private ObservableCollection<PhoneModel> _listPhones;
         private ObservableCollection<String> _listEmails;
+        public Command CallCommand { get; set; }
+        public Command EmailCommand { get; set; }
         private int heightRequest;
         public int HeightRequestListView
         {
@@ -34,7 +39,7 @@ namespace ContactApp.ViewModels
             set => SetProperty(ref _listContacts, value);
         }
 
-        public ObservableCollection<String> ListPhones
+        public ObservableCollection<PhoneModel> ListPhones
         {
             get => _listPhones;
             set => SetProperty(ref _listPhones, value, OnHeightListChanged, "ListPhones");
@@ -43,7 +48,7 @@ namespace ContactApp.ViewModels
         public ObservableCollection<String> ListEmails
         {
             get => _listEmails;
-            set => SetProperty(ref _listEmails, value,OnHeightEmailListChanged,"ListEmails");
+            set => SetProperty(ref _listEmails, value, OnHeightEmailListChanged, "ListEmails");
         }
 
         public Contact Contact
@@ -55,6 +60,48 @@ namespace ContactApp.ViewModels
         public DetailContactPageViewModel(INavigationService navigationService, ContactService dataService) : base(navigationService)
         {
             _dataService = dataService;
+            CallCommand = new Command<PhoneCellArgs>(executePhone);
+            EmailCommand = new Command<AddressCellArgs>(executeEmail);
+        }
+
+        private void executePhone(PhoneCellArgs obj)
+        {
+            if (obj.EnumEvent.Equals(Enum.EnumEvent.Call))
+            {
+                var phoneDialer = CrossMessaging.Current.PhoneDialer;
+                if (phoneDialer.CanMakePhoneCall)
+                    phoneDialer.MakePhoneCall(obj.PhoneNumber);
+            }
+            else
+            {
+                var messageDialer = CrossMessaging.Current.SmsMessenger;
+                if (messageDialer.CanSendSms)
+                {
+                    messageDialer.SendSms(obj.PhoneNumber, "");
+                    Application.Current.MainPage.DisplayAlert("Done", obj.PhoneNumber, "OK");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("False", "Device not support", "OK");
+                }
+            }
+        }
+
+        private void executeEmail(AddressCellArgs obj)
+        {
+            var emailMessenger = CrossMessaging.Current.EmailMessenger;
+            var emailBuilder = new EmailMessageBuilder()
+                .To(obj.EmailAdress)
+                .Subject("Hello Yolo BTC")
+                .Build();
+            if (emailMessenger.CanSendEmail)
+            {
+                emailMessenger.SendEmail(email: emailBuilder);
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("False", "Device not support", "OK");
+            }
         }
 
         public override void OnNavigatedTo(NavigationParameters parameters)

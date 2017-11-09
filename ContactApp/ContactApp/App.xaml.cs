@@ -31,6 +31,8 @@ namespace ContactApp
             // register the dependencies in the same
             var contactService = DependencyService.Get<ContactService>();
             Container.RegisterInstance<ContactService>(contactService);
+            //
+            Corcav.Behaviors.Infrastructure.Init();
            
         }
 

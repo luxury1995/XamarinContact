@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContactApp.iOS;
 using ContactApp.Models;
@@ -51,11 +52,17 @@ namespace ContactApp.iOS
                     contact.FirstName = item.GivenName;
                     contact.LastName = item.FamilyName;
                     contact.Company = item.OrganizationName;
-                    var PhonesList = new List<String>();
+                    var PhonesList = new List<PhoneModel>();
                     foreach (var phone in item.PhoneNumbers)
                     {
-                        PhonesList.Add(phone.Value.StringValue);
-                        contact.Phones = new ObservableCollection<string>(PhonesList);
+                        var phoneModel = new PhoneModel();
+                        phoneModel.PhoneNumber = phone.Value.StringValue;
+                        //phoneModel.PhoneType = phone.Label;
+                        var phoneType = phone.Label;
+                        string[] phoneSplit = phoneType.Split(new char[] { '_', '<' , '>' , '!', '$' }, StringSplitOptions.RemoveEmptyEntries);
+                        phoneModel.PhoneType = phoneSplit[0];
+                        PhonesList.Add(phoneModel);
+                        contact.Phones = new ObservableCollection<PhoneModel>(PhonesList);
                     }
 
                     var EmailList = new List<String>();

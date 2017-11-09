@@ -6,7 +6,7 @@ namespace ContactApp.Models
 {
     public class Contact : BindableBase
     {
-        private ObservableCollection<String> phones;
+        private ObservableCollection<PhoneModel> phones;
         private ObservableCollection<String> emails;
 
         private string _id;
@@ -96,7 +96,7 @@ namespace ContactApp.Models
         }
 
 
-        public ObservableCollection<String> Phones
+        public ObservableCollection<PhoneModel> Phones
         {
             get => phones;
             set => SetProperty(ref phones, value);

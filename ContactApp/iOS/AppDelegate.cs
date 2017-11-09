@@ -22,6 +22,7 @@ namespace ContactApp.iOS
             LoadApplication(new App());
 
             Xamarin.Forms.DependencyService.Register<ContactService>();
+            Xamarin.Forms.DependencyService.Register<IDialer>();
            
             return base.FinishedLaunching(app, options);
         }
